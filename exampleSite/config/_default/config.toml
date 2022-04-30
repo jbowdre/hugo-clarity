@@ -15,6 +15,9 @@ DefaultContentLanguage = "en"
 # [menus]
 # config/_default/menus/menu.xx.toml
 
+[permalinks]
+  post = ":title"
+
 [taxonomies]
 category = "categories"
 tag = "tags"
