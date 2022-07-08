@@ -124,7 +124,7 @@ function initializeSearch(index) {
           const searchTerm = searchField.value.trim().toLowerCase();
           if(searchTerm.length)  {
             const scopeParameter = searchScope ? `&scope=${searchScope}` : '';
-            window.location.href = new URL(`search/?query=${searchTerm}${ scopeParameter }`, rootURL).href;
+            window.location.href = new URL(baseURL + `search/?query=${searchTerm}${ scopeParameter }`).href;
           }
         });
       }
@@ -195,7 +195,7 @@ function initializeSearch(index) {
   searchPageElement ? false : liveSearch();
   passiveSearch();
 
-  wrapText(findQuery(), main);
+  highlightSearchTerms(findQuery(), '.post_body', 'mark', 'search-term');
 
   onEscape(clearSearchResults);
 
@@ -208,10 +208,34 @@ function initializeSearch(index) {
   });
 }
 
+function highlightSearchTerms(search, context, wrapper = 'mark', cssClass = '') {
+  let container = elem(context);
+  let reg = new RegExp("(" + search + ")", "gi");
+
+  function searchInNode(parentNode, search) {
+    forEach(parentNode, function (node) {
+      if (node.nodeType === 1) {
+        searchInNode(node, search);
+      } else if (
+        node.nodeType === 3 &&
+        reg.test(node.nodeValue)
+      ) {
+        let string = node.nodeValue.replace(reg, `<${wrapper} class="${cssClass}">$1</${wrapper}>`);
+        let span = document.createElement("span");
+        span.dataset.searched = "true";
+        span.innerHTML = string;
+        parentNode.replaceChild(span, node);
+      }
+    });
+  };
+
+  searchInNode(container, search);
+}
+
 window.addEventListener('load', function() {
   const pageLanguage = document.documentElement.lang;
   const searchIndex = `${ pageLanguage === 'en' ? '': pageLanguage}/index.json`;
-  fetch(new URL(searchIndex, rootURL).href)
+  fetch(new URL(baseURL + searchIndex).href)
   .then(response => response.json())
   .then(function(data) {
     data = data.length ? data : [];

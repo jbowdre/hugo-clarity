@@ -139,7 +139,7 @@ function actionPanel() {
     btn.className = `icon panel_icon panel_${button.id}`;
     button.show ? false : pushClass(btn, panelHide);
     // load icon inside button
-    btn.style.backgroundImage = `url(${parentURL}${iconsPath}${button.icon}.svg)`;
+    btn.style.backgroundImage = `url(${baseURL}${iconsPath}${button.icon}.svg)`;
     // append button on panel
     panel.appendChild(btn);
   });
@@ -163,7 +163,7 @@ function toggleLineWrap(elem) {
 }
 
 function copyCode(codeElement) {
-  lineNumbers = elems(lineClass, codeElement);
+  lineNumbers = elems('.ln', codeElement);
   // remove line numbers before copying
   if(lineNumbers.length) {
     lineNumbers.forEach(function(line){

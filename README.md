@@ -54,6 +54,7 @@ A technology-minded theme for Hugo based on VMware's open-source [Clarity Design
   * [Hooks](#hooks)
   * [Comments](#comments)
   * [Math notation](#math-notation)
+  * [Open Street Map](#map)
   * [Search](#search)
 
 ## Features
@@ -398,9 +399,9 @@ Image captions are automatically generated. If an image has title text, the capt
 
 Examples of captions:
 
-- `![Jane Doe](/images/jane-doe.png)` will display the local `jane-doe.png` image with a caption of "Jane Doe".
+- `![Jane Doe](../images/jane-doe.png)` will display the local `jane-doe.png` image with a caption of "Jane Doe".
 - `![Jane Doe](https://raw.githubusercontent.com/chipzoller/hugo-clarity/master/exampleSite/static/images/jane-doe.png "This is Jane Doe")` will display the remote image `jane-doe.png` with a caption of "This is Jane Doe".
-- `![A building](/images/building.png " ")` will display the local image `building.png` with no caption.
+- `![A building](../images/building.png " ")` will display the local image `building.png` with no caption.
 
 Examples of this can also be found in the "Markdown Syntax Guide" post in the example site content.
 
@@ -856,6 +857,33 @@ The site configuration option `showRelatedInArticle` controls if this option is 
 
 Likewise, the site configuration option `showRelatedInSidebar` controls if related content is shown on the sidebar. There is no corresponding option within a post to disable this.
 
+### Map
+
+#### Creating and including a map
+
+First create a map for free on https://umap.openstreetmap.fr/en/. Then include this map by using the `openstreetmap` shortcode, e.g. `{{<openstreetmap mapName="demo-map_1" >}}`
+
+#### Options
+
+The only required parameter is `mapName`. All other parameters are completely optional.
+
+Available parameters are:
+- `coordX` (default `auto`)
+- `coordY` (default `auto`)
+- `scale`  (default `auto`)
+- `scaleControl` (default `true`)
+- `miniMap` (default `false`)
+- `scrollWheelZoom` (default `true`)
+- `zoomControl` (default `true`)
+- `allowEdit` (default `false`)
+- `moreControl` (default `true`)
+- `searchControl` (default `true`)
+- `tilelayersControl` (default `null`)
+- `embedControl` (default `null`)
+- `datalayersControl` (default `true`)
+- `onLoadPanel` (default `none`)
+- `captionBar` (default `false`)
+
 ### Search
 
 Search is currently a BETA feature. Ensure you have these settings inside your configuration files:
@@ -870,6 +898,8 @@ Search is currently a BETA feature. Ensure you have these settings inside your c
 # config/_default/params.toml
 enableSearch = true
 ```
+
+Next add the [search.md file from the exampleSite](https://raw.githubusercontent.com/chipzoller/hugo-clarity/master/exampleSite/content/search.md) and add it to your content folder. This is not necessary if you recently created a site based on the example site and already have the file.
 
 [Compose](https://github.com/onweru/compose), from which this feature is derived, implements `fuse.js` to enable search functionality. At the time of this writing, search on this theme takes either of the following forms:
 
